@@ -221,7 +221,7 @@
           "show_vendor": true,
           "sort_enable": true,
           "tags_enable": true,
-          "show_sidebar": false
+          "show_sidebar": true
         }
       },
       "recently-viewed-products": {
