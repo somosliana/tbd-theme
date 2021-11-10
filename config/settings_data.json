@@ -202,7 +202,7 @@
           "37184e4d-3597-4619-901c-299a0745ee2f": {
             "type": "tag-list",
             "settings": {
-              "title": "",
+              "title": "Category",
               "tags": "Pool Tables, Pool Accessories, 7ft, 8ft, 9ft,"
             }
           },
@@ -212,6 +212,13 @@
               "title": "Sizes",
               "tags": "7 ft, 8 ft, 9 ft,"
             }
+          },
+          "a76b7316-1d9a-414c-bd9f-176308858276": {
+            "type": "tag-list",
+            "settings": {
+              "title": "",
+              "tags": ""
+            }
           }
         },
         "block_order": [
@@ -219,7 +226,8 @@
           "2c159a69-afa8-4eb6-8582-795fe5ed424e",
           "1573576954411",
           "37184e4d-3597-4619-901c-299a0745ee2f",
-          "be12054a-b732-4697-a752-d9c78c90f0dd"
+          "be12054a-b732-4697-a752-d9c78c90f0dd",
+          "a76b7316-1d9a-414c-bd9f-176308858276"
         ],
         "settings": {
           "layout": "grid",
