@@ -23,9 +23,9 @@
     "type_base_size": 15,
     "type_bold_product_titles": false,
     "share_image": "shopify:\/\/shop_images\/the_big_dino_Logo.png",
-    "share_facebook": true,
-    "share_twitter": true,
-    "share_pinterest": true,
+    "share_facebook": false,
+    "share_twitter": false,
+    "share_pinterest": false,
     "social_twitter_link": "https:\/\/twitter.com\/shopify",
     "social_facebook_link": "https:\/\/facebook.com\/shopify",
     "social_pinterest_link": "",
@@ -541,6 +541,27 @@
         "settings": {
           "title": "",
           "align_text": "center"
+        }
+      },
+      "product-template-barfridgesaustralia": {
+        "type": "product-template-barfridgesaustralia",
+        "settings": {
+          "image_size": "medium",
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": true,
+          "enable_zoom": true,
+          "enable_payment_button": true,
+          "show_share_buttons": true,
+          "expiring_coupon_text": "",
+          "expiring_day": "",
+          "show_eta": false,
+          "early_delivery": "",
+          "late_delivery": "",
+          "country_eta": "",
+          "shipping_text": "",
+          "product_page_max_width": "100",
+          "product_reviews_enable": false
         }
       }
     },
