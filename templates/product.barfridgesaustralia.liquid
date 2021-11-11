@@ -2,7 +2,7 @@
   The contents of the product.liquid template can be found in /sections/product-template.liquid
 {% endcomment %}
 
-{% section 'product-template' %}
+{% section 'product-template-barfridgesaustralia' %}
 {% section 'product-recommendations' %}
 {% section 'recently-viewed-products' %}
 
@@ -10,7 +10,7 @@
   <div class="text-center return-link-wrapper page-width">
     <a href="{{ collection.url }}" class="btn btn--secondary btn--has-icon-before return-link">
       {% include 'icon-arrow-left' %}
-      {{ 'products.product.back_to_collection' | t: title: collection.title }} Hello World!
+      {{ 'products.product.back_to_collection' | t: title: collection.title }}
     </a>
   </div>
 {% endif %}
