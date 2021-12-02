@@ -112,9 +112,9 @@
 
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
-		<h1 class="product-single__title">Hello World!</h1>
+
         <h1 class="product-single__title">{{ product.title }}</h1>
-        
+
          {% if section.settings.product_reviews_enable %}
           <li class="product-meta--review">
             <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
@@ -124,8 +124,8 @@
           <div class="product__price">
             {% include 'product-price', variant: current_variant %}
           </div>
-        
-       
+
+
         {% if section.settings.expiring_coupon_text != blank %}
         <div id="coupon-text">
         <span>{{ section.settings.expiring_coupon_text }} | Ends: <span id="dev-date-ends-1"></span>
@@ -138,8 +138,8 @@
         </span>
         </div>
         {% endif %}
-          
-          
+
+
 
           {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
             <div class="product__policies rte">
@@ -186,8 +186,6 @@
 
             {% if section.settings.show_quantity_selector %}
               <div class="product-form__item product-form__item--quantity">
-                <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-                <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input" pattern="[0-9]*" data-quantity-input>
                 <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
                 <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input" pattern="[0-9]*" data-quantity-input>
               </div>
@@ -244,7 +242,7 @@
         <div id="stock-info">
           <p><strong>Availability</strong>: <span></span></p>
         </div>
-     
+
 		{% if section.settings.show_eta %}
 			<div id="eta-text">
               {% assign early_delivery = section.settings.early_delivery| times:86400 %}
@@ -258,18 +256,18 @@
    			  {{ section.settings.country_eta}}
      		 {% endif %}
      		 </p>
-			</div>  
+			</div>
  		{% endif %}
 
-      
-      
+
+
         {% if section.settings.shipping_text != blank %}
 		<div id="shipping-text">
 		<p>{{ section.settings.shipping_text }}</p>
 		</div>
 		{% endif %}
       </div>
-      
+
               {% if section.settings.product_page%}
               <img src="{{ section.settings.product_page | img_url: '700x700' }}"
                    data-src="{{ img_url }}"
@@ -278,15 +276,15 @@
                    alt="Why Buy From {{ shop.name | escape }}"
                    style="max-width: {{ section.settings.product_page_max_width }}%; padding-top:10px;">
               {% endif %}
-      
+
     </div>
-    
+
     <div class="grid__item one-whole">
-      
+
         <div class="product-single__description">
          {% include 'product-description' %}
         </div>
-      
+
                	{% if section.settings.product_reviews_enable %}
     	<div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
   	{% endif %}
