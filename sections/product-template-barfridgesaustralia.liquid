@@ -112,6 +112,11 @@
 
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
+        <!-- MODIFIED: MODEL -->
+        <div class="flex">
+          <span class="font-bold">Model: {{ product.metafields.source.product_code }}</span>
+        </div>
+        <!-- ENDMODIFIED -->
 
         <h1 class="product-single__title">{{ product.title }}</h1>
 
@@ -125,20 +130,24 @@
             {% include 'product-price', variant: current_variant %}
           </div>
 
+          <!-- MODIFIED: DIMENSIONS -->
+          <div class="flex">
+            <span class="font-bold">Size: {{ product.metafields.dimensions.width }} X {{ product.metafields.dimensions.depth }} X {{ product.metafields.dimensions.height }} (WxDxH mm)</span>
+          </div>
+          <!-- ENDMODIFIED -->
 
-        {% if section.settings.expiring_coupon_text != blank %}
-        <div id="coupon-text">
-        <span>{{ section.settings.expiring_coupon_text }} | Ends: <span id="dev-date-ends-1"></span>
+          {% if section.settings.expiring_coupon_text != blank %}
+            <div id="coupon-text">
+              <span>{{ section.settings.expiring_coupon_text }} | Ends: <span id="dev-date-ends-1"></span>
 
- 		<script type="text/javascript">
-            var today = new Date(); //creates the variable date
-            today.setDate(today.getDate () +{{ section.settings.expiring_day }}); // sets it to today and add 2
-             document.getElementById("dev-date-ends-1").innerHTML = today.toLocaleDateString(); //Find the element with the ID "dev-date-ends" in this case is the span tag above and renders the date on it
-         </script>
-        </span>
-        </div>
-        {% endif %}
-
+              <script type="text/javascript">
+                var today = new Date(); //creates the variable date
+                today.setDate(today.getDate () +{{ section.settings.expiring_day }}); // sets it to today and add 2
+                document.getElementById("dev-date-ends-1").innerHTML = today.toLocaleDateString(); //Find the element with the ID "dev-date-ends" in this case is the span tag above and renders the date on it
+              </script>
+              </span>
+            </div>
+          {% endif %}
 
 
           {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
@@ -184,12 +193,51 @@
               {% endfor %}
             </select>
 
+            {% comment %}
             {% if section.settings.show_quantity_selector %}
               <div class="product-form__item product-form__item--quantity">
                 <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
                 <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input" pattern="[0-9]*" data-quantity-input>
               </div>
             {% endif %}
+            {% endcomment %}
+
+            <!-- MODIFIED: SHIPPING CALCULATOR -->
+            <script defer src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
+            <div
+              style="display: flex; padding: 0 5px; width: 100%; gap: 1rem;"
+              x-cloak
+              x-data="{
+                form: {
+                  id: {{ product.metafields.source.product_id }},
+                  postcode: null,
+                  quantity: 1
+                },
+                message: null,
+                isLoading: true
+              }">
+
+              <div style="max-width: 6rem;">
+                <label>Quantity</label>
+                <input x-model="form.quantity" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*" data-quantity-input>
+              </div>
+
+              <div style="max-width: 14rem;">
+                <label>Calculate Shipping</label>
+                <div style="display: flex; align-items: center; justify-items: center;">
+                  <input x-model="form.postcode" id="zip" name="zip" type="number" placeholder="Enter postcode here">
+                  <button @click="fetch('https://helloworld.thebigdino.workers.dev/', {
+                                          method: 'POST',
+                                          headers: { 'Content-Type': 'application/json' },
+                                          body: JSON.stringify( { id: form.id, postcode: form.postcode, quantity: form.quantity })
+                                        })
+                                        .then(res => res.text())
+                                        .then(res => {message = res; console.log(res); return false;})" type="button" style="align-self: stretch;">🔍</button>
+                  <label x-text="message" style="font-size: large; margin-left: 1rem;"></label>
+                </div>
+              </div>
+            </div>
+            <!-- ENDMODIFIED -->
 
             <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden" data-error-message-wrapper role="alert">
               {% include 'icon-error' %} <span class="product-form__error-message" data-error-message>{{ 'products.product.quantity_minimum_message' | t }}</span>
