@@ -120,6 +120,12 @@
 
         <h1 class="product-single__title">{{ product.title }}</h1>
 
+        <!-- MODIFIED: DIMENSIONS -->
+        <div class="flex">
+          <span class="font-bold">Size: {{ product.metafields.dimensions.width }} X {{ product.metafields.dimensions.depth }} X {{ product.metafields.dimensions.height }} (WxDxH mm)</span>
+        </div>
+        <!-- ENDMODIFIED -->
+
          {% if section.settings.product_reviews_enable %}
           <li class="product-meta--review">
             <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
@@ -129,12 +135,6 @@
           <div class="product__price">
             {% include 'product-price', variant: current_variant %}
           </div>
-
-          <!-- MODIFIED: DIMENSIONS -->
-          <div class="flex">
-            <span class="font-bold">Size: {{ product.metafields.dimensions.width }} X {{ product.metafields.dimensions.depth }} X {{ product.metafields.dimensions.height }} (WxDxH mm)</span>
-          </div>
-          <!-- ENDMODIFIED -->
 
           {% if section.settings.expiring_coupon_text != blank %}
             <div id="coupon-text">
@@ -208,31 +208,39 @@
               style="display: flex; padding: 0 5px; width: 100%; gap: 1rem;"
               x-cloak
               x-data="{
-                form: {
-                  id: {{ product.metafields.source.product_id }},
-                  postcode: null,
-                  quantity: 1
-                },
+                id: {{ product.metafields.source.product_id }},
+                postcode: null,
+                quantity: 1,
                 message: null,
-                isLoading: true
+                isLoading: true,
+                calculate: async function() {
+                  const url = `https://bfa-calculator.thebigdino.workers.dev/${this.id}/${this.postcode}/${this.quantity}`
+                  console.log(url)
+                  fetch(url)
+                    .then(res => res.text())
+                    .then(res => {this.message = res; console.log(res); return false;})
+                },
               }">
 
               <div style="max-width: 6rem;">
                 <label>Quantity</label>
-                <input x-model="form.quantity" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*" data-quantity-input>
+                <input x-model="quantity" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*" data-quantity-input>
               </div>
 
               <div style="max-width: 14rem;">
                 <label>Calculate Shipping</label>
                 <div style="display: flex; align-items: center; justify-items: center;">
-                  <input x-model="form.postcode" id="zip" name="zip" type="number" placeholder="Enter postcode here">
-                  <button @click="fetch('https://helloworld.thebigdino.workers.dev/', {
+                  <input x-model="postcode" id="zip" name="zip" type="number" placeholder="Enter postcode here">
+                  <button @click="calculate()" type="button" style="align-self: stretch;">🔍</button>
+                  <!--
+                  <button @click="fetch('https://test.cors.workers.dev/?https://helloworld.thebigdino.workers.dev/', {
                                           method: 'POST',
                                           headers: { 'Content-Type': 'application/json' },
-                                          body: JSON.stringify( { id: form.id, postcode: form.postcode, quantity: form.quantity })
+                                          body: JSON.stringify( { id: id, postcode: postcode, quantity: quantity })
                                         })
                                         .then(res => res.text())
                                         .then(res => {message = res; console.log(res); return false;})" type="button" style="align-self: stretch;">🔍</button>
+                  -->
                   <label x-text="message" style="font-size: large; margin-left: 1rem;"></label>
                 </div>
               </div>
