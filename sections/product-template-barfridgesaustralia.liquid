@@ -214,7 +214,7 @@
                 message: null,
                 isLoading: true,
                 calculate: async function() {
-                  const url = `https://bfa-calculator.thebigdino.workers.dev/${this.id}/${this.postcode}/${this.quantity}`
+                  const url = `https://thebigdino.com/a/bfa/${this.id}/${this.postcode}/${this.quantity}`
                   console.log(url)
                   fetch(url)
                     .then(res => res.text())
